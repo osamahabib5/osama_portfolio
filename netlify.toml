@@ -1,0 +1,44 @@
+# Netlify Configuration File
+
+# Build settings
+[build]
+  command = "echo 'No build required'"
+  publish = "."
+
+# Environment variables
+[build.environment]
+  NODE_VERSION = "18"
+
+# Redirects (example - comment out if not needed)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers configuration
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Cache-Control = "public, max-age=3600"
+
+# Cache static assets
+[[headers]]
+  for = "/*.{js,css,png,jpg,jpeg,gif,svg,woff,woff2,ttf,otf}"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# HTML caching
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# No cache for index.html
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "max-age=0, no-cache, no-store, must-revalidate"
